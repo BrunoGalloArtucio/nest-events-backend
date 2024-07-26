@@ -48,7 +48,7 @@ export class CurrentUserEventAttendaceController {
     return await this.eventsService.getEventsAttendedByUser(user.id, filter);
   }
 
-  @Get('/:eventId')
+  @Get(':eventId')
   @UseGuards(AuthGuardJwt)
   @UseInterceptors(ClassSerializerInterceptor)
   async findOne(
@@ -67,7 +67,7 @@ export class CurrentUserEventAttendaceController {
     return attendee;
   }
 
-  @Put('/:eventId')
+  @Put(':eventId')
   @UseGuards(AuthGuardJwt)
   @UseInterceptors(ClassSerializerInterceptor)
   async createOrUpdate(
