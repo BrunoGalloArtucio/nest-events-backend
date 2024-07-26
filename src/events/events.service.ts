@@ -1,10 +1,13 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from './types/entities/event.entity';
 import { DeleteResult, Repository, SelectQueryBuilder } from 'typeorm';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { AttendeeAnswerEnum } from './types/entities/attendee.entity';
-import { ListEvents } from './types/dtos/list.event';
+import { EventListFilters } from './types/dtos/list.event';
 import { PaginationResult, paginate } from './types/pagination';
+import { CreateEventDto } from './types/dtos/create-event.dto';
+import { User } from 'src/auth/user.entity';
+import { UpdateEventDto } from './types/dtos/update-event.dto';
 
 @Injectable()
 export class EventsService {
@@ -15,16 +18,29 @@ export class EventsService {
     private readonly eventsRepository: Repository<Event>,
   ) {}
 
-  private getEventsBaseQuery() {
+  public async createEvent(
+    createEventRequest: CreateEventDto,
+    user: User,
+  ): Promise<Event> {
+    const newEvent = new Event({
+      ...createEventRequest,
+      when: new Date(createEventRequest.when),
+      organizer: user,
+    });
+    return await this.eventsRepository.save(newEvent);
+  }
+
+  private getEventsBaseQuery(): SelectQueryBuilder<Event> {
     return this.eventsRepository
       .createQueryBuilder('e')
       .orderBy('e.id', 'DESC');
   }
 
-  private getEventsWithAttendeesBaseQuery() {
-    let query = this.eventsRepository
-      .createQueryBuilder('e')
-      .loadRelationCountAndMap('e.attendeeCount', 'e.attendees');
+  private getEventsWithAttendeesBaseQuery(): SelectQueryBuilder<Event> {
+    let query = this.getEventsBaseQuery().loadRelationCountAndMap(
+      'e.attendeeCount',
+      'e.attendees',
+    );
 
     query = this.addColumnForAnswer(
       query,
@@ -61,7 +77,9 @@ export class EventsService {
     );
   }
 
-  public async getEvent(id: number): Promise<Event | undefined> {
+  public async getEventWithAttendeeCount(
+    id: number,
+  ): Promise<Event | undefined> {
     const query = this.getEventsWithAttendeesBaseQuery().where('e.id = :id', {
       id,
     });
@@ -72,7 +90,7 @@ export class EventsService {
   }
 
   public async getEvents(
-    filter?: ListEvents,
+    filter?: EventListFilters,
   ): Promise<PaginationResult<Event>> {
     let query = this.getEventsWithAttendeesBaseQuery();
 
@@ -93,11 +111,57 @@ export class EventsService {
     return await paginate(query, filter);
   }
 
+  public async getEvent(id: number): Promise<Event> {
+    const event = await this.eventsRepository.findOneBy({ id });
+
+    if (!event) {
+      throw new NotFoundException();
+    }
+
+    return event;
+  }
+
   public async deleteEvent(id: number): Promise<DeleteResult> {
     return await this.eventsRepository
       .createQueryBuilder('e')
       .delete()
       .where('id = :id', { id })
       .execute();
+  }
+
+  public async updateEvent(
+    event: Event,
+    patchEventRequest: UpdateEventDto,
+  ): Promise<Event> {
+    const updatedEvent = new Event({
+      ...event,
+      ...patchEventRequest,
+      when: patchEventRequest.when
+        ? new Date(patchEventRequest.when)
+        : event.when,
+    });
+    return await this.eventsRepository.save(updatedEvent);
+  }
+
+  public async getEventsOrganizedByUser(
+    userId: number,
+    filter: EventListFilters,
+  ): Promise<PaginationResult<Event>> {
+    const query = this.getEventsBaseQuery().where('e.organizerId = :userId', {
+      userId,
+    });
+
+    return await paginate<Event>(query, filter);
+  }
+
+  public async getEventsAttendedByUser(
+    userId: number,
+    filter: EventListFilters,
+  ): Promise<PaginationResult<Event>> {
+    const query = this.getEventsBaseQuery()
+      .leftJoinAndSelect('e.attendees', 'a')
+      .where('a.userId = :userId', { userId });
+
+    return await paginate<Event>(query, filter);
   }
 }

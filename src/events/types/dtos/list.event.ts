@@ -8,7 +8,7 @@ import {
   Min,
 } from 'class-validator';
 
-export class ListEvents {
+export class EventListFilters {
   @IsDateString()
   @IsOptional()
   startDate?: string;
