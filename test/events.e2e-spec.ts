@@ -3,35 +3,27 @@ import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { DataSource } from 'typeorm';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import { PaginationResult } from '../src/events/types/pagination';
 import { Event } from '../src/events/types/entities/event.entity';
 import { User } from '../src/auth/user.entity';
-import { AuthService } from '../src/auth/auth.service';
+import {
+  loadFixtures as loadFixturesBase,
+  tokenForUser as tokenForUserBase,
+} from './utils';
 
 let app: INestApplication;
 let mod: TestingModule;
 let dataSource: DataSource;
 
-const loadFixtures = async (sqlFileName: string) => {
-  const sql = readFileSync(join(__dirname, 'fixtures', sqlFileName), 'utf8');
+const loadFixtures = async (sqlFileName: string) =>
+  loadFixturesBase(dataSource, sqlFileName);
 
-  const queryRunner = dataSource.createQueryRunner('master');
-
-  for (const c of sql.split(';')) {
-    await queryRunner.query(c);
-  }
-};
-
-export const tokenForUser = (
+const tokenForUser = (
   user: Partial<User> = {
     id: 1,
     username: 'e2e-test',
   },
-): string => {
-  return app.get(AuthService).getTokenForUser(user as User);
-};
+): string => tokenForUserBase(app, user);
 
 describe('Events (e2e)', () => {
   beforeEach(async () => {
