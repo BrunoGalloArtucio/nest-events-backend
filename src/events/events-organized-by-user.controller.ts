@@ -26,11 +26,11 @@ export class EventsOrganizedByUserController {
   @UseInterceptors(ClassSerializerInterceptor)
   async findAll(
     @Param('userId', ParseIntPipe) userId: number,
-    @Query() filter: EventListFilters = {},
+    @Query() filters: EventListFilters = {},
   ) {
     const events = await this.eventsService.getEventsOrganizedByUser(
       userId,
-      filter,
+      filters,
     );
     return events;
   }

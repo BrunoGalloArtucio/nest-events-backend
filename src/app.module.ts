@@ -22,6 +22,7 @@ import { AuthModule } from './auth/auth.module';
        *    SUPPORT_EMAIL=support@${APP_URL}
        */
       expandVariables: true,
+      envFilePath: `${process.env.NODE_ENV}.env`,
     }),
     TypeOrmModule.forRootAsync({
       useFactory:

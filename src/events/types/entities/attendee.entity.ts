@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Event } from './event.entity';
-import { User } from 'src/auth/user.entity';
+import { User } from '../../../auth/user.entity';
 import { Exclude } from 'class-transformer';
 
 export enum AttendeeAnswerEnum {
@@ -22,6 +22,7 @@ export class Attendee {
 
   @ManyToOne(() => Event, (event) => event.attendees, {
     nullable: false,
+    onDelete: 'CASCADE',
   })
   @JoinColumn()
   event: Event;

@@ -16,9 +16,9 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AttendeesService } from './attendees.service';
-import { AuthGuardJwt } from 'src/auth/auth-guards';
-import { CurrentUser } from 'src/auth/current-user.decorator';
-import { User } from 'src/auth/user.entity';
+import { AuthGuardJwt } from './../auth/auth-guards';
+import { CurrentUser } from './../auth/current-user.decorator';
+import { User } from './../auth/user.entity';
 import { CreateAttendeeDto } from './types/dtos/create-attendee.dto';
 import { EventsService } from './events.service';
 import { EventListFilters } from './types/dtos/list.event';

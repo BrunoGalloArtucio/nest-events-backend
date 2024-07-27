@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Attendee } from './attendee.entity';
-import { User } from 'src/auth/user.entity';
+import { User } from '../../../auth/user.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity()

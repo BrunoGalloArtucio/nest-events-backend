@@ -7,9 +7,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Profile } from './profile.entity';
-import { Event } from 'src/events/types/entities/event.entity';
+import { Event } from './../events/types/entities/event.entity';
 import { Exclude } from 'class-transformer';
-import { Attendee } from 'src/events/types/entities/attendee.entity';
+import { Attendee } from './../events/types/entities/attendee.entity';
 
 @Entity()
 export class User {

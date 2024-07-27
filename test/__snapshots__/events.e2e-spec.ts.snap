@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Events (e2e) should return a list of (1) event 1`] = `
+{
+  "data": [
+    {
+      "address": "Local St 101",
+      "attendeeAccepted": 0,
+      "attendeeCount": 0,
+      "attendeeMaybe": 0,
+      "attendeeRejected": 0,
+      "description": "That is a crazy event, must go there!",
+      "id": 1,
+      "name": "Interesting Party",
+      "when": "2021-04-16T00:00:00.000Z",
+    },
+  ],
+  "total": 1,
+}
+`;
+
+exports[`Events (e2e) should return a single event 1`] = `
+{
+  "address": "Local St 101",
+  "attendeeAccepted": 0,
+  "attendeeCount": 0,
+  "attendeeMaybe": 0,
+  "attendeeRejected": 0,
+  "description": "That is a crazy event, must go there!",
+  "id": 1,
+  "name": "Interesting Party",
+  "when": "2021-04-16T00:00:00.000Z",
+}
+`;

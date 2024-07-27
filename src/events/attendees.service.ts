@@ -45,6 +45,8 @@ export class AttendeesService {
     attendee.userId = userId;
     attendee.answer = input.answer;
 
+    await this.attendeesRepository.save(attendee);
+
     return attendee;
   }
 }
