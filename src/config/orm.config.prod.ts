@@ -6,6 +6,7 @@ import { Attendee } from './../events/types/entities/attendee.entity';
 import { Event } from './../events/types/entities/event.entity';
 import { Subject } from './../school/subject.entity';
 import { Teacher } from './../school/teacher.entity';
+import { Course } from 'src/school/course.entity';
 
 export default registerAs(
   'orm.config.prod',
@@ -16,7 +17,7 @@ export default registerAs(
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [Event, Attendee, Subject, Teacher, User, Profile],
+    entities: [Event, Attendee, Subject, Teacher, User, Profile, Course],
     synchronize: false,
   }),
 );
