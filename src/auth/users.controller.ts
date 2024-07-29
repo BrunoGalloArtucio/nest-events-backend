@@ -15,9 +15,10 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    if (createUserDto.password !== createUserDto.retypedPassword) {
-      throw new BadRequestException(['Passwords are not identical']);
-    }
+    // Moved to custom validator IsRepeated
+    // if (createUserDto.password !== createUserDto.retypedPassword) {
+    //   throw new BadRequestException(['Passwords are not identical']);
+    // }
 
     const existingUser = await this.userRepository.findOne({
       where: [
@@ -25,8 +26,6 @@ export class UsersController {
         { email: createUserDto.email },
       ],
     });
-
-    console.log(JSON.stringify(existingUser, null, 4));
 
     if (existingUser) {
       throw new BadRequestException(['username or email is already taken']);

@@ -6,7 +6,7 @@ import { Attendee } from './../events/types/entities/attendee.entity';
 import { Event } from './../events/types/entities/event.entity';
 import { Subject } from './../school/subject.entity';
 import { Teacher } from './../school/teacher.entity';
-import { Course } from 'src/school/course.entity';
+import { Course } from './../school/course.entity';
 
 export default registerAs(
   'orm.config.prod',

@@ -6,10 +6,11 @@ import { TrainingController } from './training.controller';
 import { TeacherResolver } from './teacher.resolver';
 import { CourseResolver } from './course.resolver';
 import { SubjectResolver } from './subject.resolver';
+import { UserResolver } from './user.resolver';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Subject, Teacher])],
   controllers: [TrainingController],
-  providers: [TeacherResolver, SubjectResolver, CourseResolver],
+  providers: [TeacherResolver, SubjectResolver, CourseResolver, UserResolver],
 })
 export class SchoolModule {}

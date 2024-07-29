@@ -10,13 +10,17 @@ import { Profile } from './profile.entity';
 import { Event } from './../events/types/entities/event.entity';
 import { Exclude } from 'class-transformer';
 import { Attendee } from './../events/types/entities/attendee.entity';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @Entity()
+@ObjectType()
 export class User {
   @PrimaryGeneratedColumn()
+  @Field(() => Int)
   id: number;
 
   @Column({ unique: true })
+  @Field()
   username: string;
 
   @Column()
@@ -24,12 +28,15 @@ export class User {
   password: string;
 
   @Column({ unique: true })
+  @Field()
   email: string;
 
   @Column()
+  @Field()
   firstName: string;
 
   @Column()
+  @Field()
   lastName: string;
 
   @OneToOne(() => Profile)
