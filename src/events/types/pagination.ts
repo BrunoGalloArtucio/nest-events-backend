@@ -1,3 +1,5 @@
+import { Type } from '@nestjs/common';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { SelectQueryBuilder } from 'typeorm';
 
 export interface PaginationOptions {
@@ -5,7 +7,20 @@ export interface PaginationOptions {
   offset?: number;
 }
 
-export interface PaginationResult<T> {
+export function Paginated<T>(classRef: Type<T>) {
+  @ObjectType()
+  class PaginationResult<T> {
+    @Field(() => Int)
+    total: number;
+
+    @Field(() => [classRef])
+    data: T[];
+  }
+
+  return PaginationResult<T>;
+}
+
+export class PaginationResult<T> {
   total: number;
   data: T[];
 }
