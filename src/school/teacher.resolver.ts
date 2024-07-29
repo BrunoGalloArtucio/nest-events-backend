@@ -16,7 +16,7 @@ import { Subject } from './subject.entity';
 import { TeacherEditInput } from './input/teacher-edit.input';
 import { EntityWithId } from './school.types';
 import { AuthGuardJwtGql } from '../auth/auth-guards';
-import { paginate } from 'src/events/types/pagination';
+import { paginate } from '../events/types/pagination';
 
 @Resolver(() => Teacher)
 export class TeacherResolver {

@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GraphQL (e2e) teachers query should return paginated result with teachers 1`] = `
+{
+  "data": {
+    "teachers": {
+      "data": [
+        {
+          "gender": "Female",
+          "id": 2,
+          "name": "Teacher 2",
+          "subjects": [],
+        },
+        {
+          "gender": "Male",
+          "id": 1,
+          "name": "Teacher 1",
+          "subjects": [],
+        },
+      ],
+      "total": 2,
+    },
+  },
+}
+`;
