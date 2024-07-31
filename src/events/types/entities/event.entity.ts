@@ -7,7 +7,6 @@ import {
 } from 'typeorm';
 import { Attendee } from './attendee.entity';
 import { User } from '../../../auth/user.entity';
-import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Event {
@@ -37,7 +36,6 @@ export class Event {
   organizer: User;
 
   @Column({ nullable: true })
-  @Exclude()
   organizerId: number;
 
   attendeeCount?: number;

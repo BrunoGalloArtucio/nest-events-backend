@@ -12,6 +12,7 @@ exports[`Events (e2e) should return a list of (1) event 1`] = `
       "description": "That is a crazy event, must go there!",
       "id": 1,
       "name": "Interesting Party",
+      "organizerId": 1,
       "when": "2021-04-16T00:00:00.000Z",
     },
   ],
@@ -29,6 +30,7 @@ exports[`Events (e2e) should return a single event 1`] = `
   "description": "That is a crazy event, must go there!",
   "id": 1,
   "name": "Interesting Party",
+  "organizerId": 1,
   "when": "2021-04-16T00:00:00.000Z",
 }
 `;

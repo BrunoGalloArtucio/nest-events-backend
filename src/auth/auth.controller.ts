@@ -22,6 +22,8 @@ export class AuthController {
   async login(@CurrentUser() user: User) {
     return {
       userId: user?.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
       token: this.authService.getTokenForUser(user),
     };
   }
